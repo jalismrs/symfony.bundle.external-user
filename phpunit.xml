@@ -1,0 +1,48 @@
+<?xml
+        version="1.0"
+        encoding="UTF-8"
+        ?>
+<!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
+<phpunit
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.4/phpunit.xsd"
+        backupGlobals="false"
+        beStrictAboutChangesToGlobalState="true"
+        beStrictAboutCoversAnnotation="true"
+        beStrictAboutOutputDuringTests="true"
+        beStrictAboutTestsThatDoNotTestAnything="true"
+        beStrictAboutTodoAnnotatedTests="true"
+        bootstrap="vendor/autoload.php"
+        colors="true"
+        columns="67"
+        forceCoversAnnotation="true"
+        stderr="true"
+        verbose="true">
+    <coverage
+            processUncoveredFiles="true"
+    >
+        <include>
+            <directory suffix=".php">src
+            </directory>
+        </include>
+        <exclude>
+            <file>src/Resources</file>
+        </exclude>
+        <report>
+            <clover
+                    outputFile="var/coverage/clover.xml"
+            />
+            <html
+                    outputDirectory="var/coverage/html"
+                    lowUpperBound="50"
+                    highLowerBound="75"
+            />
+        </report>
+    </coverage>
+    <logging/>
+    <testsuites>
+        <testsuite name="">
+            <directory>tests</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

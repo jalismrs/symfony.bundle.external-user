@@ -1,0 +1,29 @@
+services:
+    _defaults:
+        public: false
+    
+    api_throttler.api_throttler:
+        class: 'Jalismrs\ApiThrottlerBundle\ApiThrottler'
+        arguments:
+            $rateLimitProvider: '@Maba\GentleForce\RateLimitProvider'
+            $throttler: '@Maba\GentleForce\ThrottlerInterface'
+    
+    Jalismrs\ApiThrottlerBundle\ApiThrottler: '@api_throttler.api_throttler'
+    
+    # maba/gentle-force
+    Maba\GentleForce\RateLimitProvider:
+        autowire: true
+    Maba\GentleForce\Throttler:
+        arguments:
+            $client: '@Predis\Client'
+            $rateLimitProvider: '@Maba\GentleForce\RateLimitProvider'
+            $prefix: 'rate_limit::'
+    Maba\GentleForce\ThrottlerInterface: '@Maba\GentleForce\Throttler'
+    
+    # predis/predis
+    Predis\Client:
+        arguments:
+            $parameters:
+                host: '%env(REDIS_HOST)%'
+            $options:
+                prefix: '%app.name%::'

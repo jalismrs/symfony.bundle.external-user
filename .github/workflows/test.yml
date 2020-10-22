@@ -1,0 +1,66 @@
+name: 'test'
+on:
+    - 'pull_request'
+jobs:
+    php:
+        name: PHP ${{ matrix.php-versions }}
+        runs-on: 'ubuntu-latest'
+        services:
+            mariadb:
+                image: 'mariadb:10.5.3'
+                env:
+                    MYSQL_DATABASE: 'test'
+                    MYSQL_ROOT_PASSWORD: 'test'
+                    MYSQL_ROOT_USER: 'test'
+                    MYSQL_PASSWORD: 'test'
+                    MYSQL_USER: 'test'
+                ports:
+                    - 33060:3306
+                options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=10s --health-retries=10
+        strategy:
+            fail-fast: false
+            matrix:
+                php-versions:
+                    - '7.4'
+        steps:
+            - name: 'Checkout'
+              uses: 'actions/checkout@v2'
+
+            # ------------------------------------------------------------------
+            # Env --------------------------------------------------------------
+            - name: 'Setup PHP'
+              uses: 'shivammathur/setup-php@verbose'
+              with:
+                  coverage: xdebug
+                  extensions: ctype, dom, filter, gd, iconv, intl, json, mbstring, pdo, xml
+                  php-version: ${{ matrix.php-versions }}
+
+            - name: 'Setup Problem Matchers for PHP'
+              run: echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+
+            - name: 'Setup Problem Matchers for PHPUnit'
+              run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+            # ------------------------------------------------------------------
+            # Composer ---------------------------------------------------------
+            - name: 'Validate composer'
+              run: composer validate
+
+            - name: 'Get composer cache directory'
+              id: 'composer-cache'
+              run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+            - name: 'Cache composer dependencies'
+              uses: 'actions/cache@v1'
+              with:
+                  path: ${{ steps.composer-cache.outputs.dir }}
+                  key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+                  restore-keys: ${{ runner.os }}-composer-
+
+            - name: 'Install Composer dependencies'
+              run: composer install --no-progress --no-suggest --optimize-autoloader --prefer-dist
+
+            # ------------------------------------------------------------------
+            # Tests ------------------------------------------------------------
+            - name: 'Run tests'
+              run: vendor/bin/phpunit -vvv
