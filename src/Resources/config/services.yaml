@@ -2,13 +2,13 @@ services:
     _defaults:
         public: false
     
-    api_throttler.api_throttler:
-        class: 'Jalismrs\ApiThrottlerBundle\ApiThrottler'
+    external_user.external_user:
+        class: 'Jalismrs\ExternalUserBundle\ExternalUser'
         arguments:
             $rateLimitProvider: '@Maba\GentleForce\RateLimitProvider'
             $throttler: '@Maba\GentleForce\ThrottlerInterface'
     
-    Jalismrs\ApiThrottlerBundle\ApiThrottler: '@api_throttler.api_throttler'
+    Jalismrs\ExternalUserBundle\ExternalUser: '@external_user.external_user'
     
     # maba/gentle-force
     Maba\GentleForce\RateLimitProvider:
