@@ -8,7 +8,7 @@
   ],
   "autoload" : {
     "psr-4" : {
-      "Jalismrs\\ApiThrottlerBundle\\" : "src"
+      "Jalismrs\\ExternalUserBundle\\" : "src"
     }
   },
   "autoload-dev" : {
@@ -22,7 +22,7 @@
   "description" : "API Throttler Symfony bundle helps you throttle API calls using a persistent token bucket algorithm",
   "license": "MIT",
   "minimum-stability": "dev",
-  "name" : "jalismrs/symfony-api-throttler.bundle",
+  "name" : "jalismrs/symfony-external-user.bundle",
   "require-dev" : {
     "composer/package-versions-deprecated" : "*",
     "mikey179/vfsstream" : "*",
@@ -38,10 +38,10 @@
   },
   "support" : {
     "email" : "dev@jalis.fr",
-    "issues" : "https://github.com/jalismrs/symfony-api-throttler.bundle/issues",
-    "wiki" : "https://github.com/jalismrs/symfony-api-throttler.bundle/wiki",
-    "source" : "https://github.com/jalismrs/symfony-api-throttler.bundle",
-    "docs" : "https://github.com/jalismrs/symfony-api-throttler.bundle"
+    "issues" : "https://github.com/jalismrs/symfony-external-user.bundle/issues",
+    "wiki" : "https://github.com/jalismrs/symfony-external-user.bundle/wiki",
+    "source" : "https://github.com/jalismrs/symfony-external-user.bundle",
+    "docs" : "https://github.com/jalismrs/symfony-external-user.bundle"
   },
   "type" : "symfony-bundle"
 }
