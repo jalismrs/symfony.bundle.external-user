@@ -1,6 +1,7 @@
 services:
     _defaults:
-        public: false
+        autowire: true
+        autoconfigure: true
     
     external_user.external_user:
         class: 'Jalismrs\ExternalUserBundle\ExternalUser'
