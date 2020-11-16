@@ -58,9 +58,18 @@ jobs:
                   restore-keys: ${{ runner.os }}-composer-
 
             - name: 'Install Composer dependencies'
-              run: composer install --no-progress --no-suggest --optimize-autoloader --prefer-dist
+              run: composer update --no-progress --optimize-autoloader --prefer-dist
 
             # ------------------------------------------------------------------
             # Tests ------------------------------------------------------------
             - name: 'Run tests'
               run: vendor/bin/phpunit -vvv
+
+            - name: 'Upload coverage report'
+              uses: 'codecov/codecov-action@v1'
+              with:
+                  file: 'var/coverage/clover.xml'
+                  flags: 'php,unit'
+                  name: 'symfony.bundle.external-user'
+                  token: ${{ secrets.CODECOV_TOKEN }}
+                  verbose: true
