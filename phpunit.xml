@@ -26,7 +26,7 @@
             </directory>
         </include>
         <exclude>
-            <file>src/Resources</file>
+            <directory>src/Resources</directory>
         </exclude>
         <report>
             <clover
